@@ -7,8 +7,11 @@ The improved OS-SIFT is faster than the original OS-SIFT and it can obtain more 
 
 # Usage
 The source code is provided here in matlab.
+
 For different datasets, the Harris function thresholds d_SH_1 & d_SH_2 must be adjusted to produce comparable keypoint detection results for SAR and optical images.
+
 For images with extremely large rotation differences, we suggest to use imrotate and flipr(flipud) function in Matlab for pre-processing.
+
 For images with no rotation differences, the main angle of each keypoint can be set to 0.
 
 # Citation
