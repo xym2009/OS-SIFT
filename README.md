@@ -1,11 +1,6 @@
-# OS-SIFT
-
-OS-SIFT is a coregistration algorithm designed for optical-to-SAR image registration.
-
-We hope this code will be helpful and we remain to your disposal and we are interested in getting back your remarks.
+OS-SIFT is a coregistration algorithm designed for optical-to-SAR image registration. We hope this code will be helpful and we remain to your disposal and we are interested in getting back your remarks.
 
 version 1.3
-
 We have improved the OS-SIFT method by adding parallel processing in descriptor construction stage and combining FSC with geometric constraints.
 
 The improved OS-SIFT is faster than the original OS-SIFT and it can obtain more correspondences. However, it does not support multi-region by now.
