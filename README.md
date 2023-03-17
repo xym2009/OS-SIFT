@@ -17,4 +17,13 @@ For images with no rotation differences, the main angle of each keypoint can be 
 # Citation
 If you are using OS-SIFT in your project, we kindly ask you to cite:
 
-Y. Xiang, F. Wang and H. You, "OS-SIFT: A Robust SIFT-Like Algorithm for High-Resolution Optical-to-SAR Image Registration in Suburban Areas," in IEEE Transactions on Geoscience and Remote Sensing, vol. 56, no. 6, pp. 3078-3090, June 2018.
+@article{xiang2018sift,
+  title={OS-SIFT: A robust SIFT-like algorithm for high-resolution optical-to-SAR image registration in suburban areas},
+  author={Xiang, Yuming and Wang, Feng and You, Hongjian},
+  journal={IEEE Transactions on Geoscience and Remote Sensing},
+  volume={56},
+  number={6},
+  pages={3078--3090},
+  year={2018},
+  publisher={IEEE}
+}
