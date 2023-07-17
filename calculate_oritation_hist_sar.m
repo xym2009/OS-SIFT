@@ -44,12 +44,9 @@ temp_hist=zeros(1,n);
 [row,col]=size(bin);
 for i=1:1:row
     for j=1:1:col
-       if(((i-center_y)^2+(j-center_x)^2)<=radius^2)
-           if (bin(i,j))~=round(bin(i,j))
-               
-           end
+        if(((i-center_y)^2+(j-center_x)^2)<=radius^2)
             temp_hist(bin(i,j)+1)=temp_hist(bin(i,j)+1)+W(i,j);
-       end
+        end
     end
 end
 
@@ -61,7 +58,7 @@ hist(1)=(temp_hist(17)+temp_hist(3))/16+...
 hist(2)=(temp_hist(18)+temp_hist(4))/16+...
     4*(temp_hist(1)+temp_hist(3))/16+temp_hist(2)*6/16;
 hist(3:n-2)=(temp_hist(1:n-4)+temp_hist(5:n))/16+...
-4*(temp_hist(2:n-3)+temp_hist(4:n-1))/16+temp_hist(3:n-2)*6/16;
+    4*(temp_hist(2:n-3)+temp_hist(4:n-1))/16+temp_hist(3:n-2)*6/16;
 
 hist(n-1)=(temp_hist(n-3)+temp_hist(1))/16+...
     4*(temp_hist(n-2)+temp_hist(n))/16+temp_hist(n-1)*6/16;

@@ -6,24 +6,26 @@ clear;close all;clc
 addpath 'data\'
 % gray image is required
 im1_path='t2.tif';  %optical image
+im1_path = '18APR24174447-P2AS-013202438020_01_P001L1-1-L2.tiff';
 im2_path='t1.tif';  %sar image
+im2_path = 'GF3_KAS_SL_015331_W95.9_N41.3_20190709_L1B_HH_L10004105495-1-L2.tiff';
 image_1=imread(im1_path);
 image_2=imread(im2_path); 
-image_11=im2double(image_1);
-image_22=im2double(image_2);
-image_11=image_11+0.001;%prevent denominator to be zero  
-image_22=image_22+0.001;
+image_1=imadjust(im2double(image_1));
+image_2=imadjust(im2double(image_2));
+image_11=image_1+0.001;%prevent denominator to be zero  
+image_22=image_2+0.001;
 %% Define parameters 
 sigma=2;%the parameter of first scale
 ratio=2^(1/3);%scale ratio
 Mmax=8;%layer number
 d=0.04;
-d_SH_1=5;%Harris function threshold, need to refine for different dataset  
+d_SH_1=0.5;%Harris function threshold, need to refine for different dataset  
 d_SH_2=1;%Harris function threshold  
 change_form='affine';%it can be 'similarity','afine','perspective'
 is_sift_or_log='GLOH-like';%Type of descriptor,it can be 'GLOH-like','SIFT'
 is_keypoints_refine=false;% set to false if the number of keypoints is small
-is_multi_region=true; % set to false for efficiency
+is_multi_region=false; % set to false for efficiency
 
 [r1,c1]=size(image_11);
 [r2,c2]=size(image_22);

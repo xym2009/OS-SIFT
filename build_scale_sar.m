@@ -1,23 +1,23 @@
-function [sar_harris_function,gradient,angle]=build_scale(image,sigma,Mmax,ratio,d)
+function [sar_harris_function,gradient,angle]=build_scale_sar(image,sigma,Mmax,ratio,d)
 
 
 [M,N]=size(image);
 sar_harris_function=zeros(M,N,Mmax);
 gradient=zeros(M,N,Mmax);
 angle=zeros(M,N,Mmax);
-
+Mask = image==0.001; SE = strel('square',5); Mask = imdilate(Mask,SE);Mask=1-Mask;
 for i=1:1:Mmax
-    %% 
+    %%
     scale=sigma*ratio^(i-1);
     radius=round(2*scale);
     j=-radius:1:radius;
     k=-radius:1:radius;
     [xarry,yarry]=meshgrid(j,k);
-%     W=exp(-((xarry.*xarry)+(yarry.*yarry))/(4*scale));
-%     H=abs(sin(1.0*xarry/scale));
-%     V=abs(sin(1.0*yarry/scale));
-%     WH=W.*H;
-%     WV=W.*V;
+    %     W=exp(-((xarry.*xarry)+(yarry.*yarry))/(4*scale));
+    %     H=abs(sin(1.0*xarry/scale));
+    %     V=abs(sin(1.0*yarry/scale));
+    %     WH=W.*H;
+    %     WV=W.*V;
     W=exp(-(abs(xarry)+abs(yarry))/scale);
     W34=zeros(2*radius+1,2*radius+1);
     W12=zeros(2*radius+1,2*radius+1);
@@ -33,26 +33,26 @@ for i=1:1:Mmax
     M12=imfilter(image,W12,'replicate');
     M14=imfilter(image,W14,'replicate');
     M23=imfilter(image,W23,'replicate');
-
-    Gx=log(M14./M23);
-    Gy=log(M34./M12);
     
-     Gx(find(imag(Gx)))=abs(Gx(find(imag(Gx))));
-     Gy(find(imag(Gy)))=abs(Gy(find(imag(Gy))));
-     Gx(~isfinite(Gx))=0;
-     Gy(~isfinite(Gy))=0;
-        
-    temp_gradient=sqrt(Gx.^2+Gy.^2);  
+    Gx=log(M14./M23); Gx=Gx.*Mask;
+    Gy=log(M34./M12); Gy=Gy.*Mask;
+    
+    Gx(find(imag(Gx)))=abs(Gx(find(imag(Gx))));
+    Gy(find(imag(Gy)))=abs(Gy(find(imag(Gy))));
+    Gx(~isfinite(Gx))=0;
+    Gy(~isfinite(Gy))=0;
+    
+    temp_gradient=sqrt(Gx.^2+Gy.^2);
     temp_gradient=temp_gradient/max(temp_gradient(:));
     gradient(:,:,i)= temp_gradient;
-    temp_angle=atan(Gy./Gx);
-%     temp_angle=atan2(Gy,Gx);
+    temp_angle=atan(Gy./Gx); temp_angle(isnan(temp_angle))=0;
+    %     temp_angle=atan2(Gy,Gx);
     temp_angle=temp_angle/pi*180;
     temp_angle(temp_angle<0)=temp_angle(temp_angle<0)+180;
     angle(:,:,i)=temp_angle;
     
-%     Gx=Gx/max(Gx(:));
-%     Gy=Gy/max(Gy(:));
+    %     Gx=Gx/max(Gx(:));
+    %     Gy=Gy/max(Gy(:));
     Csh_11=scale^2*Gx.^2;
     Csh_12=scale^2*Gx.*Gy;
     Csh_22=scale^2*Gy.^2;
@@ -70,27 +70,9 @@ for i=1:1:Mmax
     Csh_21=Csh_12;
     Csh_22=imfilter(Csh_22,W_gaussian,'replicate');
     
-%     temp_angle=atan(abs(Gy)./abs(Gx));
-%     temp_angle=temp_angle/pi*180;
-%     temp_angle=min(temp_angle./45,45./temp_angle);
-%     sar_harris_function(:,:,i)=temp_angle.*(Csh_11.*Csh_22-Csh_21.*Csh_12-d*(Csh_11+Csh_22).^2);
+    %     temp_angle=atan(abs(Gy)./abs(Gx));
+    %     temp_angle=temp_angle/pi*180;
+    %     temp_angle=min(temp_angle./45,45./temp_angle);
+    %     sar_harris_function(:,:,i)=temp_angle.*(Csh_11.*Csh_22-Csh_21.*Csh_12-d*(Csh_11+Csh_22).^2);
     sar_harris_function(:,:,i)=Csh_11.*Csh_22-Csh_21.*Csh_12-d*(Csh_11+Csh_22).^2;
 end
-  
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
