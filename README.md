@@ -1,7 +1,9 @@
-# Version 1.4
+# Version 1.5
 OS-SIFT is a coregistration algorithm designed for optical-to-SAR image registration. We hope this code will be helpful and we remain to your disposal and we are interested in getting back your remarks. 
 
-2023/7/17 Support remote sensing images with black blocks (GEC images), by using a Mask to remove keypoints at image boundary. 
+2023/10/27 V1.5: No need to adjust the harris threshold, we now select the strongest 5000 keypoints. Add the source code of CSC_match (CSC2.m).
+
+2023/7/17 V1.4: Support remote sensing images with black blocks (GEC images), by using a Mask to remove keypoints at image boundary. 
 
 We have improved the OS-SIFT method by adding parallel processing in descriptor construction stage and combining FSC with geometric constraints. The improved OS-SIFT is faster than the original OS-SIFT and it can obtain more correspondences. However, it does not support multi-region by now. 
 
@@ -10,24 +12,20 @@ The FSC with geometric constraint algorithm (CSC_match) was proposed in this pap
 # Usage
 The source code is provided here in matlab.
 
-For different datasets, the Harris function thresholds d_SH_1 & d_SH_2 must be adjusted to produce comparable keypoint detection results for SAR and optical images.
+For images with no rotation differences, the main angle of each keypoint should be set to 0 to avoid inaccurate main orientation.
 
 For images with extremely large rotation differences, we suggest to use imrotate and flipr(flipud) function in Matlab for pre-processing.
-
-For images with no rotation differences, the main angle of each keypoint can be set to 0.
-
-For images with black blocks (like geocoded images), the black areas should be masked in feature construction to avoid interference. 
 
 # Citation
 If you are using OS-SIFT in your project, we kindly ask you to cite:
 
-@article{xiang2018sift,
-  title={OS-SIFT: A robust SIFT-like algorithm for high-resolution optical-to-SAR image registration in suburban areas},
-  author={Xiang, Yuming and Wang, Feng and You, Hongjian},
-  journal={IEEE Transactions on Geoscience and Remote Sensing},
-  volume={56},
-  number={6},
-  pages={3078--3090},
-  year={2018},
-  publisher={IEEE}
-}
+    @article{xiang2018sift,
+      title={OS-SIFT: A robust SIFT-like algorithm for high-resolution optical-to-SAR image registration in suburban areas},
+      author={Xiang, Yuming and Wang, Feng and You, Hongjian},
+      journal={IEEE Transactions on Geoscience and Remote Sensing},
+      volume={56},
+      number={6},
+      pages={3078--3090},
+      year={2018},
+      publisher={IEEE}
+    }
