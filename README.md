@@ -7,7 +7,7 @@ OS-SIFT is a coregistration algorithm designed for optical-to-SAR image registra
 
 We have improved the OS-SIFT method by adding parallel processing in descriptor construction stage and combining FSC with geometric constraints. The improved OS-SIFT is faster than the original OS-SIFT and it can obtain more correspondences. However, it does not support multi-region by now. 
 
-The FSC with geometric constraint algorithm (CSC_match) was proposed in this paper (X. Zhang, Y. Wang and H. Liu, "Robust Optical and SAR Image Registration Based on OS-SIFT and Cascaded Sample Consensus," in IEEE Geoscience and Remote Sensing Letters, vol. 19, pp. 1-5, 2022, Art no. 4011605, doi: 10.1109/LGRS.2021.3069761.). We just implemented the algorithm and cannot guarantee its correctness.
+The FSC with geometric constraint algorithm (CSC2) was proposed in this paper (X. Zhang, Y. Wang and H. Liu, "Robust Optical and SAR Image Registration Based on OS-SIFT and Cascaded Sample Consensus," in IEEE Geoscience and Remote Sensing Letters, vol. 19, pp. 1-5, 2022). We just implemented the algorithm and cannot guarantee its correctness.
 
 # Usage
 The source code is provided here in matlab.
