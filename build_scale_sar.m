@@ -1,6 +1,5 @@
 function [sar_harris_function,gradient,angle]=build_scale_sar(image,sigma,Mmax,ratio,d)
 
-
 [M,N]=size(image);
 sar_harris_function=zeros(M,N,Mmax);
 gradient=zeros(M,N,Mmax);
@@ -51,8 +50,6 @@ for i=1:1:Mmax
     temp_angle(temp_angle<0)=temp_angle(temp_angle<0)+180;
     angle(:,:,i)=temp_angle;
     
-    %     Gx=Gx/max(Gx(:));
-    %     Gy=Gy/max(Gy(:));
     Csh_11=scale^2*Gx.^2;
     Csh_12=scale^2*Gx.*Gy;
     Csh_22=scale^2*Gy.^2;

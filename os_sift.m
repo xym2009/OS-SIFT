@@ -20,8 +20,8 @@ sigma=2;%the parameter of first scale
 ratio=2^(1/3);%scale ratio
 Mmax=8;%layer number
 d=0.04;
-d_SH_1=0.5;%Harris function threshold, need to refine for different dataset  
-d_SH_2=1;%Harris function threshold  
+d_SH_1=0.00001;%Harris function threshold  
+d_SH_2=0.00001;%Harris function threshold  
 change_form='affine';%it can be 'similarity','afine','perspective'
 is_sift_or_log='GLOH-like';%Type of descriptor,it can be 'GLOH-like','SIFT'
 is_keypoints_refine=false;% set to false if the number of keypoints is small
@@ -37,7 +37,11 @@ is_multi_region=false; % set to false for efficiency
 %% Feature point detection
 [GR_key_array_1]=find_scale_extreme(sar_harris_function_1,d_SH_1,sigma,ratio,gradient_1,angle_1);
 [GR_key_array_2]=find_scale_extreme(sar_harris_function_2,d_SH_2,sigma,ratio,gradient_2,angle_2);
-
+% save the strongest 5000 points
+kp1res = sort(GR_key_array_1(:,6),'descend');
+kp2res = sort(GR_key_array_2(:,6),'descend');
+GR_key_array_11=GR_key_array_1(GR_key_array_1(:,6)>kp1res(5000),:);
+GR_key_array_22=GR_key_array_2(GR_key_array_2(:,6)>kp2res(5000),:);
 if is_keypoints_refine == true
 %     [ GR_key_array_1 ] = RemovebyBorder( GR_key_array_1, c1,r1, 11 );
 %     [ GR_key_array_2 ] = RemovebyBorder( GR_key_array_2, c2,r2, 11 );
@@ -53,6 +57,7 @@ end
 
 %% match & image fusion
 % [solution,cor2,cor1,cor22,cor11]=match(image_2, image_1,descriptors_2,locs_2,descriptors_1,locs_1,is_multi_region);
-[solution,cor22,cor11]= CSC_match(image_2,image_1,descriptors_2,locs_2,descriptors_1,locs_1);
+%[solution,cor22,cor11]= CSC_match(image_2,image_1,descriptors_2,locs_2,descriptors_1,locs_1);
+[solution,cor22,cor11]=CSC2(image_2,image_1,descriptors_2,locs_2,descriptors_1,locs_1);
 image_fusion(image_1,image_2,solution);
 

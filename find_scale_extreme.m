@@ -16,11 +16,8 @@ key_point_array=zeros(M,6);
 
 for i=1:1:num
     temp_current=sar_harris_function(:,:,i);
-%     temp_current=temp_current/max(temp_current(:));   % for simulation experiment
     gradient_current=gradient(:,:,i);
     angle_current=angle(:,:,i);
-%     angle_loca=min(angle_current./45,45./angle_current);
-%     temp_current=temp_current.*angle_loca;
     for j=BORDER_WIDTH:1:M-BORDER_WIDTH
         for k=BORDER_WIDTH:1:N-BORDER_WIDTH
             temp=temp_current(j,k);
@@ -29,10 +26,8 @@ for i=1:1:num
                 temp>temp_current(j,k-1) && temp>temp_current(j,k+1) &&...
                 temp>temp_current(j+1,k-1) && temp>temp_current(j+1,k) && temp>temp_current(j+1,k+1)...
                 )
-                  
                 scale=sigma*ratio^(i-1);
-                [hist,max_value]=calculate_oritation_hist_sar(k,j,scale,...
-                        gradient_current,angle_current,HIST_BIN);
+                [hist,max_value]=calculate_oritation_hist_sar(k,j,scale,gradient_current,angle_current,HIST_BIN);
                 
                 mag_thr=max_value*SIFT_ORI_PEAK_RATIO;  
                 for kk=1:1:HIST_BIN
@@ -69,6 +64,5 @@ for i=1:1:num
     end
 end
 key_point_array=key_point_array(1:key_number,1:6);
-
 end
 
